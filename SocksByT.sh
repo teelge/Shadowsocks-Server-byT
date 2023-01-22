@@ -5,6 +5,8 @@ sudo snap install shadowsocks-libev
 sudo mkdir -p /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev
 echo "System update complete!"
 
+clear
+
 echo "Enter the password for shadowsocks:"
 read password
 echo "Enter the port number for shadowsocks:"
