@@ -11,6 +11,10 @@ sudo -- sh -c 'apt-get update; apt-get upgrade -y; apt-get full-upgrade -y; apt-
 ```
 wget -N --no-check-certificate https://raw.githubusercontent.com/teelge/Shadowsocks-Server-byT/main/SocksByT.sh && chmod +x SocksByT.sh && bash SocksByT.sh
 ```
+
+
+# Make Sure To open The Tcp Port that You Specified In your Router Or Server Provider's Network Setting otherwise, you can't connect to this server!!!!
+
 # check Status of The Server With This Command 
 ```
 sudo systemctl status shadowsocks-libev-server@config
