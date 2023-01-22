@@ -2,6 +2,7 @@
 
 
   > ✨This is A simple But Very Effective Script To Install ShadowSocks Server On Your Linux Server
+  > By Taregh For Freedom To Iranian People 
 
 <p align="center">
   <img width="700" align="center" src="https://raw.githubusercontent.com/teelge/Shadowsocks-Server-byT/main/SocksByT.gif" alt="demo"/>
