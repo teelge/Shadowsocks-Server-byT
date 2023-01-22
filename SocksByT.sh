@@ -1,28 +1,20 @@
 #!/bin/bash
 
+echo "Updating system packages..."
+sudo apt-get update
+sudo apt-get upgrade -y
+sudo apt-get full-upgrade -y
+sudo apt-get autoremove -y
+sudo apt-get autoclean -y
 sudo apt install -y snapd
 sudo snap install shadowsocks-libev
 sudo mkdir -p /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev
 echo "System update complete!"
 
-
-
-
-if [ -z "$1" ]; then
-    read -p "Enter the password for shadowsocks: " password
-    while [ -z "$password" ]; do
-        read -p "Password cannot be left blank. Please enter a password: " password
-    done
-else
-    password=$1
-fi
-
-read -p "Enter the port number for shadowsocks: " port
-
-if [ -z "$port" ]; then
-    port=443
-    echo "Port number left blank, using default value 443"
-fi
+echo "Enter the password for shadowsocks:"
+read password
+echo "Enter the port number for shadowsocks:"
+read port
 
 echo "{
    \"server\":[\"0.0.0.0\", \"::0\"],
@@ -32,6 +24,7 @@ echo "{
    \"timeout\":60,
    \"method\":\"chacha20-ietf-poly1305\",
    \"nameserver\":\"1.1.1.1\"
+
 }" | sudo tee /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev/config.json
 
 sudo touch /etc/systemd/system/shadowsocks-libev-server@.service
@@ -57,8 +50,3 @@ echo "Shadowsocks-Libev server has been configured and started."
 
 # add the cron job
 echo "@daily  sudo apt update && sudo apt upgrade -y" | crontab -
-
-echo "Server password: $password"
-echo "Server port: $port"
-echo "Password method: chacha20-ietf-poly1305"
-echo "check the servers status with  sudo systemctl status shadowsocks-libev-server@config"
