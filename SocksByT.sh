@@ -6,6 +6,7 @@ sudo mkdir -p /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev
 echo "System update complete!"
 
 
+
 read -p "Enter the password for shadowsocks: " password
 
 while [ -z "$password" ]; do
