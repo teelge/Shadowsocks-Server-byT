@@ -4,6 +4,14 @@ clear
 read -p "Enter server port: " port
 read -p "Enter password: " password
 
+if [ -z "$port" ]; then
+  port=443
+fi
+
+if [ -z "$password" ]; then
+  password=$(date +%s | sha256sum | base64 | head -c 32 ; echo)
+fi
+
 sudo apt install -y snapd
 sudo snap install shadowsocks-libev
 sudo mkdir -p /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev
@@ -23,3 +31,9 @@ sudo ufw allow $port
 sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
 sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 sudo systemctl enable --now shadowsocks-libev-server@config
+
+clear
+
+echo "Port: $port"
+echo "Password: $password"
+
