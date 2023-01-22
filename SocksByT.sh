@@ -38,7 +38,8 @@ clear
 external_ip=$(curl -s http://checkip.dyndns.org | grep -Eo '[0-9\.]+')
 
 echo "Please Wait "
-
+sleep 1
+clear
 echo "Server's External IP: $external_ip"
 
 echo "Port: $port"
