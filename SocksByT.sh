@@ -35,6 +35,9 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 sudo systemctl enable --now shadowsocks-libev-server@config
 
 clear
+external_ip=$(curl -s http://checkip.dyndns.org | grep -Eo '[0-9\.]+')
+
+echo "Server's External IP: $external_ip"
 
 echo "Port: $port"
 echo "Password: $password"
