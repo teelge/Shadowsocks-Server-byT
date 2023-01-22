@@ -37,7 +37,7 @@ sudo systemctl enable --now shadowsocks-libev-server@config
 clear
 external_ip=$(curl -s http://checkip.dyndns.org | grep -Eo '[0-9\.]+')
 
-echo "PLEASE WAIT"
+echo "Please Wait "
 
 echo "Server's External IP: $external_ip"
 
