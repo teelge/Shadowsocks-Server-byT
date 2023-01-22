@@ -7,11 +7,15 @@ echo "System update complete!"
 
 
 
-read -p "Enter the password for shadowsocks: " password
 
-while [ -z "$password" ]; do
-    read -p "Password cannot be left blank. Please enter a password: " password
-done
+if [ -z "$1" ]; then
+    read -p "Enter the password for shadowsocks: " password
+    while [ -z "$password" ]; do
+        read -p "Password cannot be left blank. Please enter a password: " password
+    done
+else
+    password=$1
+fi
 
 read -p "Enter the port number for shadowsocks: " port
 
