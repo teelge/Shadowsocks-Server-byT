@@ -1,6 +1,6 @@
 #!/bin/bash
 
-
+echo "Updating system packages..."
 sudo apt install -y snapd
 sudo snap install shadowsocks-libev
 sudo mkdir -p /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev
@@ -43,5 +43,3 @@ sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 
 echo "Shadowsocks-Libev server has been configured and started."
 
-# add the cron job
-echo "@daily  sudo apt update && sudo apt upgrade -y" | crontab -
