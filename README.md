@@ -11,3 +11,7 @@ sudo -- sh -c 'apt-get update; apt-get upgrade -y; apt-get full-upgrade -y; apt-
 ```
 sudo curl -L https://raw.githubusercontent.com/teelge/Shadowsocks-Server-byT/main/SocksByT.sh | bash
 ```
+# check Status of The Server With This Command 
+```
+sudo systemctl status shadowsocks-libev-server@config
+```
