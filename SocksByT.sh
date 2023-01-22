@@ -1,15 +1,8 @@
 #!/bin/bash
 
-echo "Updating system packages..."
-nice -n 19 sudo apt-get update
-sleep 1
-nice -n 19 sudo apt-get upgrade -y
-sleep 1
-nice -n 19 sudo apt install -y snapd
-sleep 4
-nice -n 19 sudo snap install shadowsocks-libev
-sleep 4
-nice -n 19 sudo mkdir -p /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev
+sudo apt install -y snapd
+sudo snap install shadowsocks-libev
+sudo mkdir -p /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev
 echo "System update complete!"
 
 echo "Enter the password for shadowsocks:"
