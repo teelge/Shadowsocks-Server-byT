@@ -8,9 +8,11 @@ if [ -z "$port" ]; then
   port=443
 fi
 
-if [ -z "$password" ]; then
-  password=$(date +%s | sha256sum | base64 | head -c 32 ; echo)
-fi
+while [ -z "$password" ]
+do
+  echo "A password is required. Please enter a password:"
+  read -p "Enter password: " password
+done
 
 sudo apt install -y snapd
 sudo snap install shadowsocks-libev
