@@ -5,6 +5,7 @@ sudo snap install shadowsocks-libev
 sudo mkdir -p /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev
 echo "System update complete!"
 
+
 echo "Enter the password for shadowsocks:"
 read password
 
@@ -29,7 +30,7 @@ echo '{
    "timeout":60,
    "method":"chacha20-ietf-poly1305",
    "nameserver":"1.1.1.1"
-}" | sudo tee /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev/config.json
+}' | sudo tee /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev/config.json
 
 sudo touch /etc/systemd/system/shadowsocks-libev-server@.service
 echo "[Unit]
