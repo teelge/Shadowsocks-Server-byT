@@ -3,6 +3,10 @@
 
   > ✨This is A simple But Very Effective Script To Install ShadowSocks Server On Your Linux Server
 
+<p align="center">
+  <img width="700" align="center" src="https://raw.githubusercontent.com/teelge/Shadowsocks-Server-byT/main/SocksByT.gif" alt="demo"/>
+</p>
+
 ## To Run The Instalation First Update Your Linux Server With This Command
 ```
 sudo -- sh -c 'apt-get update; apt-get upgrade -y; apt-get full-upgrade -y; apt-get autoremove -y; apt-get autoclean -y'
@@ -22,6 +26,3 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/teelge/Shadowso
 sudo systemctl status shadowsocks-libev-server@config
 ```
 
-<p align="center">
-  <img width="700" align="center" src="https://raw.githubusercontent.com/teelge/Shadowsocks-Server-byT/main/SocksByT.gif" alt="demo"/>
-</p>
