@@ -13,7 +13,7 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/teelge/Shadowso
 ```
 
 
-# Make Sure To open The Tcp Port that You Specified In your Router Or Server Provider's Network Setting otherwise, you can't connect to this server!!!!
+# Make Sure that the TCP port That You Chose in the script is open by opening it on your router or server provider's network settings. Otherwise, you will not be able to connect to the server.!!!!
 
 # check Status of The Server With This Command 
 ```
