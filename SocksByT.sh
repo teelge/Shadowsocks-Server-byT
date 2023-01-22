@@ -5,14 +5,10 @@ nice -n 19 sudo apt-get update
 sleep 1
 nice -n 19 sudo apt-get upgrade -y
 sleep 1
-nice -n 19 sudo apt-get autoremove -y
-sleep 1
-nice -n 19 sudo apt-get autoclean -y
-sleep 1
 nice -n 19 sudo apt install -y snapd
-sleep 1
+sleep 4
 nice -n 19 sudo snap install shadowsocks-libev
-sleep 1
+sleep 4
 nice -n 19 sudo mkdir -p /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev
 echo "System update complete!"
 
