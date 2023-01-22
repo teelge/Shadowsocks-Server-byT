@@ -64,3 +64,4 @@ echo "@daily  sudo apt update && sudo apt upgrade -y" | crontab -
 echo "Server password: $password"
 echo "Server port: $port"
 echo "Password method: chacha20-ietf-poly1305"
+exho " check the servers status with : sudo systemctl status shadowsocks-libev-server@config "
