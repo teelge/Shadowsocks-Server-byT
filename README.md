@@ -26,3 +26,7 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/teelge/Shadowso
 sudo systemctl status shadowsocks-libev-server@config
 ```
 
+## To tweak the setting Use This Command 
+```
+sudo nano /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev/config.json
+```
