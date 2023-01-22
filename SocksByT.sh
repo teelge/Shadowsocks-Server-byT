@@ -51,3 +51,7 @@ echo "Shadowsocks-Libev server has been configured and started."
 # add the cron job
 echo "@daily  sudo apt update && sudo apt upgrade -y" | crontab -
 
+echo "Shadowsocks-Libev server has been configured and started successfully."
+echo "Server password: $password"
+echo "Server port: $port"
+echo "Password method: chacha20-ietf-poly1305"
