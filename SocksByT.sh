@@ -1,5 +1,6 @@
 #!/bin/bash
 
+clear
 read -p "Enter server port: " port
 read -p "Enter password: " password
 
