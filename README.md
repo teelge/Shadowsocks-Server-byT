@@ -9,7 +9,7 @@ sudo -- sh -c 'apt-get update; apt-get upgrade -y; apt-get full-upgrade -y; apt-
 ```
 
 
-## Then Copy And Paste This Line In your Linux Terminal 
+## 🚀 Then Copy And Paste This Line In your Linux Terminal 
 ```
 wget -N --no-check-certificate https://raw.githubusercontent.com/teelge/Shadowsocks-Server-byT/main/SocksByT.sh && chmod +x SocksByT.sh && bash SocksByT.sh
 ```
@@ -17,7 +17,7 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/teelge/Shadowso
 
 ##  ‼️ Make Sure that the TCP port That You Chose in the script is open by opening it on your router or server provider's network settings. Otherwise, you will not be able to connect to the server.‼️
 
-## check Status of The Server With This Command 
+## ✅ check Status of The Server With This Command 
 ```
 sudo systemctl status shadowsocks-libev-server@config
 ```
