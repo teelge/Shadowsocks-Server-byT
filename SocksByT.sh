@@ -22,5 +22,3 @@ sudo ufw allow $port
 sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
 sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
 sudo systemctl enable --now shadowsocks-libev-server@config
-
-echo -e "\033[31mPort: $port \nPassword: $password \nMethod: chacha20-ietf-poly1305\033[0m"
