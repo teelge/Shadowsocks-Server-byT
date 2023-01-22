@@ -21,3 +21,7 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/teelge/Shadowso
 ```
 sudo systemctl status shadowsocks-libev-server@config
 ```
+
+<p align="center">
+  <img width="700" align="center" src="https://raw.githubusercontent.com/teelge/Shadowsocks-Server-byT/main/SocksByT.gif" alt="demo"/>
+</p>
