@@ -6,16 +6,13 @@ sudo mkdir -p /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev
 echo "System update complete!"
 
 
-echo "Enter the password for shadowsocks:"
-read password
+read -p "Enter the password for shadowsocks: " password
 
 while [ -z "$password" ]; do
-    echo "Password cannot be left blank. Please enter a password:"
-    read password
+    read -p "Password cannot be left blank. Please enter a password: " password
 done
 
-echo "Enter the port number for shadowsocks:"
-read port
+read -p "Enter the port number for shadowsocks: " port
 
 if [ -z "$port" ]; then
     port=443
