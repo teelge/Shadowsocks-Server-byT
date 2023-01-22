@@ -5,8 +5,6 @@ nice -n 19 sudo apt-get update
 sleep 1
 nice -n 19 sudo apt-get upgrade -y
 sleep 1
-nice -n 19 sudo apt-get full-upgrade -y
-sleep 1
 nice -n 19 sudo apt-get autoremove -y
 sleep 1
 nice -n 19 sudo apt-get autoclean -y
