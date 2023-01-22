@@ -11,7 +11,7 @@ sudo -- sh -c 'apt-get update; apt-get upgrade -y; apt-get full-upgrade -y; apt-
 ```
 wget -N --no-check-certificate https://raw.githubusercontent.com/teelge/Shadowsocks-Server-byT/main/SocksByT.sh && chmod +x SocksByT.sh && bash SocksByT.sh
 ```
-
+---
 
 ## Make Sure that the TCP port That You Chose in the script is open by opening it on your router or server provider's network settings. Otherwise, you will not be able to connect to the server.!!!!
 
