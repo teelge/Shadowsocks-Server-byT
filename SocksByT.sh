@@ -19,15 +19,15 @@ if [ -z "$port" ]; then
     echo "Port number left blank, using default value 443"
 fi
 
-echo '{
-   "server":["0.0.0.0", "::0"],
-   "mode":"tcp_and_udp",
-   "server_port":'$port',
-   "password":"'$password'",
-   "timeout":60,
-   "method":"chacha20-ietf-poly1305",
-   "nameserver":"1.1.1.1"
-}' | sudo tee /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev/config.json
+echo "{
+   \"server\":[\"0.0.0.0\", \"::0\"],
+   \"mode\":\"tcp_and_udp\",
+   \"server_port\":$port,
+   \"password\":\"$password\",
+   \"timeout\":60,
+   \"method\":\"chacha20-ietf-poly1305\",
+   \"nameserver\":\"1.1.1.1\"
+}" | sudo tee /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev/config.json
 
 sudo touch /etc/systemd/system/shadowsocks-libev-server@.service
 echo "[Unit]
