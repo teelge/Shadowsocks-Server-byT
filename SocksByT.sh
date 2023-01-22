@@ -13,8 +13,19 @@ echo "System update complete!"
 
 echo "Enter the password for shadowsocks:"
 read password
+
+while [ -z "$password" ]; do
+    echo "Password cannot be left blank. Please enter a password:"
+    read password
+done
+
 echo "Enter the port number for shadowsocks:"
 read port
+
+if [ -z "$port" ]; then
+    port=443
+    echo "Port number left blank, using default value 443"
+fi
 
 echo "{
    \"server\":[\"0.0.0.0\", \"::0\"],
@@ -51,7 +62,6 @@ echo "Shadowsocks-Libev server has been configured and started."
 # add the cron job
 echo "@daily  sudo apt update && sudo apt upgrade -y" | crontab -
 
-echo "Shadowsocks-Libev server has been configured and started successfully."
 echo "Server password: $password"
 echo "Server port: $port"
 echo "Password method: chacha20-ietf-poly1305"
