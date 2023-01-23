@@ -21,7 +21,7 @@ sudo -- sh -c 'apt-get update; apt-get upgrade -y; apt-get full-upgrade -y; apt-
 
 ## 🚀 حالا برای نصب برنامه کد زیر رو در terminal اجرا کنید 
 ```
-wget -N --no-check-certificate https://raw.githubusercontent.com/teelge/Shadowsocks-Server-byT/main/SocksByT.sh && chmod +x SocksByT.sh && bash SocksByT.sh
+wget -N --no-check-certificate https://raw.githubusercontent.com/teelge/Shadowsocks-Server-byT/2165e3e8eebc1258f1ef5ed4a8b984d2bfa3eda0/fa-Fa/SocksByTfarsi.sh && chmod +x SocksByTfarsi.sh && bash SocksByTfarsi.sh
 ```
 ---
 
@@ -41,6 +41,6 @@ sudo nano /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev/config.json
 ---
 ## 🗑️ برای حذف نرم افزار (فرمان را دوباره اجرا کنید)
 ```
-wget -N --no-check-certificate https://raw.githubusercontent.com/teelge/Shadowsocks-Server-byT/main/SocksByT.sh && chmod +x SocksByT.sh && bash SocksByT.sh
+wget -N --no-check-certificate https://raw.githubusercontent.com/teelge/Shadowsocks-Server-byT/2165e3e8eebc1258f1ef5ed4a8b984d2bfa3eda0/fa-Fa/SocksByTfarsi.sh && chmod +x SocksByTfarsi.sh && bash SocksByTfarsi.sh
 ```
 
