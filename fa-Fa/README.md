@@ -1,5 +1,5 @@
 <h1 align="center">به گیتهاب من خوش آمدید 👋</h1>
-- [🇬🇧 English](./README.md). ⬅️ For English ⬅️
+- [🇬🇧 English](../README.md). ⬅️ For English ⬅️
 
 
 |  ا ین کد رو برای ساخت سرور پروکسی درست کردم که در سرور لینوکس نسب کنید |
