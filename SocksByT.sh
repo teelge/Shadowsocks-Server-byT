@@ -40,10 +40,10 @@ if snap list | grep -q shadowsocks-libev; then
 clear
 
         echo " "
-        echo "    Server External IP: $(curl -s http://checkip.dyndns.org | grep -Eo '[0-9\.]+')"
-        echo "    Server Port: $(jq '.server_port' /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev/config.json)"
-        echo "    Password: $(jq '.password' /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev/config.json)"
-        echo "    Method: $(jq '.method' /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev/config.json)"
+        echo "    Server External IP: $(curl -s http://checkip.dyndns.org | grep -Eo '[0-9\.]+'). "
+        echo "    Server Port: $(jq '.server_port' /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev/config.json). "
+        echo "    Password: $(jq '.password' /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev/config.json).  "
+        echo "    Method: $(jq '.method' /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev/config.json).  "
         echo " "
         exit 0
     else
