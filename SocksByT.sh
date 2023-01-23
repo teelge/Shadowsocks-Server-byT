@@ -41,7 +41,7 @@ echo "Please Wait "
 sleep 1
 
 clear
-echo -e "\033[31m\033[1mServer's External IP: $external_ip\033[0m"
-echo -e "\033[31m\033[1mPort: $port\033[0m"
-echo -e "\033[31m\033[1mPassword: $password\033[0m"
+echo -e "\033[33m\033[1m\033[7mServer's External IP: $external_ip\033[0m"
+echo -e "\033[33m\033[1m\033[7mPort: $port\033[0m"
+echo -e "\033[33m\033[1m\033[7mPassword: $password\033[0m"
 
