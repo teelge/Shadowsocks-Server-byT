@@ -76,7 +76,7 @@ do
   read -p "Enter password: " password
 done
 
-
+sudo apt-get install -y jq
 sudo apt install -y snapd
 sudo snap install shadowsocks-libev
 sudo mkdir -p /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev
