@@ -1,12 +1,22 @@
 #!/bin/bash
 
 clear
+
 read -p "Enter Shadowsocks port [1-65535](default: 443):" port
-read -p "Enter password:" password
 
 if [ -z "$port" ]; then
   port=443
+else
+  case $port in
+    [1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-5][0-9][0-9][0-9]|6[0-4][0-9][0-9]|65[0-4][0-9]|655[0-3][0-5])
+      echo "Valid port";;
+    *)
+      echo "Invalid port. Please enter a number between 1-65535."
+      read -p "Enter Shadowsocks port [1-65535](default: 443):" port;;
+  esac
 fi
+
+read -p "Enter password:" password
 
 while [ -z "$password" ]
 do
