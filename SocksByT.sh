@@ -1,8 +1,3 @@
-#!/bin/bash
-
-clear
-
-# Check if package is already installed
 if snap list | grep -q shadowsocks-libev; then
     echo "Shadowsocks Server Is Already Installed !! "
     echo " "
@@ -12,10 +7,12 @@ if snap list | grep -q shadowsocks-libev; then
     echo " "
     echo "CHECK STATUS = 2 "
     echo " "
-    read -p "1 OR 2 ? : " choice
+    echo "VIEW SETTINGS = 3 "
+    echo " "
+    read -p "1, 2, OR 3 ? : " choice
     if [ "$choice" = "1" ]; then
 
-clear
+    clear
         echo " "
         echo "       Uninstalling .. "
         echo " "
@@ -23,7 +20,7 @@ clear
         sudo systemctl stop shadowsocks-libev-server@config.service
         sudo systemctl disable shadowsocks-libev-server@config.service
         sudo rm /etc/systemd/system/shadowsocks-libev-server@.service
-clear        
+    clear        
         echo " "
         echo "    Shadowsocks has been uninstalled. "
         echo " "
@@ -32,11 +29,18 @@ clear
     elif [ "$choice" = "2" ]; then
         sudo systemctl status shadowsocks-libev-server@config
         exit 0
+    elif [ "$choice" = "3" ]; then
+        echo "Server External IP: $(curl -s http://checkip.dyndns.org | grep -Eo '[0-9\.]+')"
+        echo "Server Port: $(jq '.server_port' /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev/config.json)"
+        echo "Password: $(jq '.password' /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev/config.json)"
+        echo "Method: $(jq '.method' /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev/config.json)"
+        exit 0
     else
         echo "Invalid choice. Exiting."
         exit 1
     fi
 fi
+
 
 clear
 
