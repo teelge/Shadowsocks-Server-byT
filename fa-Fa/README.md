@@ -15,7 +15,7 @@ sudo -- sh -c 'apt-get update; apt-get upgrade -y; apt-get full-upgrade -y; apt-
 ```
 
 
-## 🚀 Then Copy And Paste This Line In your Linux Terminal 
+## 🚀 حالا برای نصب برنامه کد زیر رو در terminal اجرا کنید 
 ```
 wget -N --no-check-certificate https://raw.githubusercontent.com/teelge/Shadowsocks-Server-byT/main/SocksByT.sh && chmod +x SocksByT.sh && bash SocksByT.sh
 ```
