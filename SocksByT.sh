@@ -20,7 +20,9 @@ if snap list | grep -q shadowsocks-libev; then
         sudo systemctl stop shadowsocks-libev-server@config.service
         sudo systemctl disable shadowsocks-libev-server@config.service
         sudo rm /etc/systemd/system/shadowsocks-libev-server@.service
-        echo "Shadowsocks-libev has been uninstalled."
+clear        
+        echo " "
+        echo "Shadowsocks has been uninstalled."
         exit 0
     elif [ "$choice" = "2" ]; then
         sudo systemctl status shadowsocks-libev-server@config
