@@ -23,17 +23,19 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/teelge/Shadowso
 
 ##  ‼️ بعد از نصب حتما پورت 443 یا همان پورتی که در مراحل نصب انتخاب کردید رو در تنضیمات اینترنتی ارائه دهنده سرور باز کنید (پروتوکول TCP)  ‼️
 
-##  check Status of The Server With This Command 
+##  با این دستور وضعیت سرور را بررسی کنید
+
 ```
 sudo systemctl status shadowsocks-libev-server@config
 ```
 
-## To tweak the setting Use This Command 
+## برای تغییر تنظیمات از این فرمان استفاده کنید (برای کاربران حرفه ای)
+ 
 ```
 sudo nano /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev/config.json
 ```
 ---
-## 🗑️ Uninstall !!  (Run The Command Again)
+## 🗑️ برای حذف نرم افزار (فرمان را دوباره اجرا کنید)
 ```
 wget -N --no-check-certificate https://raw.githubusercontent.com/teelge/Shadowsocks-Server-byT/main/SocksByT.sh && chmod +x SocksByT.sh && bash SocksByT.sh
 ```
