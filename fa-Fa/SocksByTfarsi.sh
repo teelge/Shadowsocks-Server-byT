@@ -5,7 +5,7 @@ clear
 # Check if package is already installed
 
 if snap list | grep -q shadowsocks-libev; then
-    echo "Shadowsocks Server Is Already Installed !! "
+    echo "سرور شما نصب شده  !! "
     echo " "
     echo "What Do You Want To Do? "
     echo " "
