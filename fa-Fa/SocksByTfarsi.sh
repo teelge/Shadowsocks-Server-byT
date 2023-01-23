@@ -7,20 +7,20 @@ clear
 if snap list | grep -q shadowsocks-libev; then
     echo "سرور شما نصب شده  !! "
     echo " "
-    echo "What Do You Want To Do? "
+    echo "چه دستوری را لازم دارید؟? "
     echo " "
-    echo "UNINSTALL = 1 "
+    echo "حذف نرم افزار = 1 "
     echo " "
-    echo "CHECK STATUS = 2 "
+    echo "بررسی  وضعیت سرور = 2 "
     echo " "
-    echo "VIEW SETTINGS = 3 "
+    echo "بازبینی رمز و آدرس ها = 3 "
     echo " "
-    read -p "1, 2, OR 3 ? : " choice
+    read -p "1, 2,  3 ? : " choice
     if [ "$choice" = "1" ]; then
 
     clear
         echo " "
-        echo "       Uninstalling .. "
+        echo "       در حال حذف .. "
         echo " "
         sudo snap remove shadowsocks-libev
         sudo systemctl stop shadowsocks-libev-server@config.service
@@ -28,7 +28,7 @@ if snap list | grep -q shadowsocks-libev; then
         sudo rm /etc/systemd/system/shadowsocks-libev-server@.service
     clear        
         echo " "
-        echo "    Shadowsocks has been uninstalled. "
+        echo "    نرم افزارها با موفقیت پاک شدند. "
         echo " "
         echo " "
         exit 0
@@ -38,7 +38,7 @@ if snap list | grep -q shadowsocks-libev; then
     elif [ "$choice" = "3" ]; then
  
 clear
-        echo "Please Wait "
+        echo "لطفا منتظر بمانید "
 sleep 1
 clear
         echo " "
@@ -59,7 +59,7 @@ clear
 
 while true; do
     echo " "
-    echo "Choose a port number or Press Enter (The Script Will Choose The Recommended Port Automatically) "
+    echo "لطفا پورت سرور را انتخاب کنید(اگر نزارید خودش انتخاب میکنه( "
     echo " "
     read -p " Enter Shadowsocks port [1-65535](default: 443):" port
     if [ -z "$port" ]; then
