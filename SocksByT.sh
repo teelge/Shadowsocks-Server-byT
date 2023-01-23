@@ -58,7 +58,10 @@ fi
 clear
 
 while true; do
-    read -p "Enter Shadowsocks port [1-65535](default: 443):" port
+    echo " "
+    echo "  Please Choose a port number or Press Enter ( The Script Will Choose The Recommended Port Automatically ) "
+    echo " "
+    read -p "     Enter Shadowsocks port [1-65535](default: 443):" port
     if [ -z "$port" ]; then
       port=443
       break
