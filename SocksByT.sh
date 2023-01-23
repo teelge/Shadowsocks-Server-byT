@@ -18,6 +18,7 @@ while true; do
     fi
 done
 
+clear
 
 read -p "Enter password:" password
 
@@ -58,6 +59,8 @@ clear
 echo -e "\033[1m\033[33mServer's External IP: $external_ip\033[0m"
 echo -e "\033[1m\033[33mPort: $port\033[0m"
 echo -e "\033[1m\033[33mPassword: $password\033[0m"
+echo -e "\033[1m\033[33mMethod: chacha20-ietf-poly1305\033[0m"
+
 
 read -p "Do you want to see the status of your server? (y/n)? " choice
 if [ "$choice" = "y" ]; then
