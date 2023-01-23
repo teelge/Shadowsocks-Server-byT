@@ -25,7 +25,9 @@ clear
         sudo rm /etc/systemd/system/shadowsocks-libev-server@.service
 clear        
         echo " "
-        echo "Shadowsocks has been uninstalled."
+        echo "    Shadowsocks has been uninstalled. "
+        echo " "
+        echo " "
         exit 0
     elif [ "$choice" = "2" ]; then
         sudo systemctl status shadowsocks-libev-server@config
