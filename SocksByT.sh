@@ -66,5 +66,5 @@ else
   echo "FREEDOM ACTIVATED BY T. "
 fi
 
-echo -e "\033[0;31mMake Sure that the TCP port That You Chose in the script is open by opening it on your router or server provider's network settings. Otherwise, you will not be able to connect to the server.\033[0m"
+echo -e "\033[0;31mMake Sure that the TCP port That You Chose in the script ( $port ) is open by opening it on your router or server provider's network settings. Otherwise, you will not be able to connect to the server.\033[0m"
 
