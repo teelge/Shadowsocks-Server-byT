@@ -3,54 +3,31 @@
 clear
 
 while true; do
-    echo "What do you want to do?"
-    echo "1) Install"
-    echo "2) Uninstall"
-    read -p "Enter your option: " option
-    case $option in
-        1)
-            echo "You have selected option 1: Install."
-            break;;
-        2)
-            echo "You have selected option 2: Uninstall."
-            sudo systemctl stop shadowsocks-libev-server@config
-            sudo systemctl disable shadowsocks-libev-server@config
-            sudo snap remove shadowsocks-libev
-            sudo rm -rf /var/snap/shadowsocks-libev
-            echo "Shadowsocks-libev Uninstalled"
-            break;;
+    read -p "Enter Shadowsocks port [1-65535](default: 443):" port
+    if [ -z "$port" ]; then
+      port=443
+      break
+    else
+      case $port in
+        [1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-5][0-9][0-9][0-9]|6[0-4][0-9][0-9]|65[0-4][0-9]|655[0-3][0-5])
+          echo "Valid port"
+          break;;
         *)
-            echo "Invalid option. Please enter '1' for install or '2' for uninstall.";;
-    esac
+          echo "Invalid port. Please enter a number between 1-65535.";;
+      esac
+    fi
 done
 
-if [ "$option" = "1" ]; then
-    clear
-    while true; do
-        read -p "Enter Shadowsocks port [1-65535](default: 443):" port
-        if [ -z "$port" ]; then
-          port=443
-          break
-        else
-          case $port in
-            [1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-5][0-9][0-9][0-9]|6[0-4][0-9][0-9]|65[0-4][0-9]|655[0-3][0-5])
-              echo "Valid port"
-              break;;
-            *)
-              echo "Invalid port. Please enter a number between 1-65535.";;
-          esac
-        fi
-    done
+clear
 
-    clear
+read -p "Enter password:" password
 
-    read -p "Enter password:" password
+while [ -z "$password" ]
+do
+  echo "A password is required. Please enter a password:"
+  read -p "Enter password: " password
+done
 
-    while [ -z "$password" ]
-    do
-      echo "A password is required. Please enter a password:"
-      read -p "Enter password: " password
-    done
 
 sudo apt install -y snapd
 sudo snap install shadowsocks-libev
@@ -93,4 +70,3 @@ else
 fi
 
 echo -e "\033[0;31mMake Sure that the TCP port That You Chose in the script ( $port ) is open by opening it on your router or server provider's network settings. Otherwise, you will not be able to connect to the server.\033[0m"
-
