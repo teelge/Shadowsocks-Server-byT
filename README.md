@@ -1,6 +1,6 @@
 <h1 align="center">Welcome to My Github 👋</h1>
 
-- [🇮🇷 فارسی /farsi](./fa-Fa/README.md). ⬅️                  - !  For Farsi Click ⬅️ 
+- [🇮🇷 فارسی /farsi](./fa-Fa/README.md). ⬅️                  - ! https://github.com/teelge/Shadowsocks-Server-byT/blob/main/fa-Fa/README.md  For Farsi Click ⬅️ 
 
 
 | I Made This Script So Everyone Could Create Proxy Server For People In need of Internet Without Limitation ✌🏻  Feel Free To Use This ONE line Code to deploy your very Own Server |
