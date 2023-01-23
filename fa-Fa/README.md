@@ -21,7 +21,7 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/teelge/Shadowso
 ```
 ---
 
-##  ‼️ Make Sure that the TCP port That You Chose in the script is open by opening it on your router or server provider's network settings. Otherwise, you will not be able to connect to the server.‼️
+##  ‼️ بعد از نصب حتما پورت ۴۴۳ یا همان پورتی که در مراحل نصب انتخاب کردید رو در تنضیمات اینترنتی ارائه دهنده سرور باز کنید (پروتوکول TCP)  ‼️
 
 ##  check Status of The Server With This Command 
 ```
