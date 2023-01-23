@@ -4,11 +4,11 @@ clear
 
 # Check if package is already installed
 if snap list | grep -q shadowsocks-libev; then
-    echo "Shadowsocks-libev is already installed."
+    echo "Shadowsocks Server Is Already Installed !!."
     echo "What Do You Want To Do? "
     echo "UNINSTALL = 1. "
     echo "CHECK STATUS = 2. "
-    read -p "1 OR 2 " choice
+    read -p "1 OR 2 ? : " choice
     if [ "$choice" = "1" ]; then
         sudo snap remove shadowsocks-libev
         sudo systemctl stop shadowsocks-libev-server@config.service
