@@ -63,6 +63,6 @@ read -p "Do you want to see the status of your server? (y/n)? " choice
 if [ "$choice" = "y" ]; then
   sudo systemctl status shadowsocks-libev-server@config
 else
-  echo "FREEDOM ACTIVATED BY T "
+  echo "FREEDOM ACTIVATED BY T. "
 fi
 
