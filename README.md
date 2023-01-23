@@ -10,7 +10,7 @@
 
 ## To Run The Instalation First Update Your Linux Server With This Command
 ```
-sudo -- sh -c 'apt-get update; apt-get upgrade -y; apt-get full-upgrade -y; apt-get autoremove -y; apt-get autoclean -y'
+sudo -- sh -c 'apt-get update; apt-get upgrade -y; apt-get full-upgrade -y; apt-get autoremove -y; apt-get autoclean -y ; clear'
 ```
 
 
