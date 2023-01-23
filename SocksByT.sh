@@ -36,10 +36,15 @@ if snap list | grep -q shadowsocks-libev; then
         sudo systemctl status shadowsocks-libev-server@config
         exit 0
     elif [ "$choice" = "3" ]; then
-        echo "Server External IP: $(curl -s http://checkip.dyndns.org | grep -Eo '[0-9\.]+')"
-        echo "Server Port: $(jq '.server_port' /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev/config.json)"
-        echo "Password: $(jq '.password' /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev/config.json)"
-        echo "Method: $(jq '.method' /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev/config.json)"
+ 
+clear
+
+        echo " "
+        echo "    Server External IP: $(curl -s http://checkip.dyndns.org | grep -Eo '[0-9\.]+')"
+        echo "    Server Port: $(jq '.server_port' /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev/config.json)"
+        echo "    Password: $(jq '.password' /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev/config.json)"
+        echo "    Method: $(jq '.method' /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev/config.json)"
+        echo " "
         exit 0
     else
         echo "Invalid choice. Exiting."
