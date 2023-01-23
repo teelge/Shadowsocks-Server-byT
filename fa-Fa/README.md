@@ -3,8 +3,7 @@
 |  ا ین کد رو برای ساخت سرور پروکسی درست کردم که در سرور لینوکس نسب کنید |
 |---|
 
-  > ✨This is A simple But Very Effective Script To Install ShadowSocks Server On Your Linux Server
-  > By T For Freedom To Iranian People 
+  > ✨ کار کردن باهاش خیلی راحته ، برای دور زدن فیلترینگ
 
 <p align="center">
   <img width="700" align="center" src="https://raw.githubusercontent.com/teelge/Shadowsocks-Server-byT/main/SocksByT.gif" alt="demo"/>
