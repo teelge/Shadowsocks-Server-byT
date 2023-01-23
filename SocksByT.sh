@@ -1,8 +1,5 @@
 #!/bin/bash
 
-Copy code
-#!/bin/bash
-
 clear
 
 while true; do
@@ -18,6 +15,7 @@ while true; do
             echo "You have selected option 2: Uninstall."
             sudo systemctl stop shadowsocks-libev-server@config
             sudo systemctl disable shadowsocks-libev-server@config
+            sudo ufw delete allow $port
             sudo snap remove shadowsocks-libev
             sudo rm -rf /var/snap/shadowsocks-libev
             echo "Shadowsocks-libev Uninstalled"
@@ -54,7 +52,6 @@ if [ "$option" = "1" ]; then
       echo "A password is required. Please enter a password:"
       read -p "Enter password: " password
     done
-
 
 
 sudo apt install -y snapd
