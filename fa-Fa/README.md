@@ -9,7 +9,7 @@
   <img width="700" align="center" src="https://raw.githubusercontent.com/teelge/Shadowsocks-Server-byT/main/SocksByT.gif" alt="demo"/>
 </p>
 
-## To Run The Instalation First Update Your Linux Server With This Command
+## قبل از نصب باید سیستم عامل سرور لینوکس رو آپدیت کنید (کد زیر رو کپی و در terminal اجرا کنید)
 ```
 sudo -- sh -c 'apt-get update; apt-get upgrade -y; apt-get full-upgrade -y; apt-get autoremove -y; apt-get autoclean -y ; clear'
 ```
