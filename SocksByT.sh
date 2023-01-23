@@ -1,8 +1,9 @@
 #!/bin/bash
 
 clear
-read -p "Enter server port: " port
-read -p "Enter password: " password
+echo "Enter Shadowsocks port [1-65535](default: 443):"
+read -p "Enter port number [0-10]:" port
+read -p "Enter password:" password
 
 if [ -z "$port" ]; then
   port=443
@@ -13,6 +14,7 @@ do
   echo "A password is required. Please enter a password:"
   read -p "Enter password: " password
 done
+
 
 sudo apt install -y snapd
 sudo snap install shadowsocks-libev
