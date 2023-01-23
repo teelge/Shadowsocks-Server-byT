@@ -1,8 +1,6 @@
 <h1 align="center">به گیتهاب من خوش آمدید 👋</h1>
 
-- ![Us](https://raw.githubusercontent.com/gosquared/flags/1d382a9ea87667ac59c493b8fd771f49ce837e6a/flags/flags/shiny/24/United-States.png) **English**: [teelge
-/
-Shadowsocks-Server-byT](https://github.com/teelge/Shadowsocks-Server-byT)
+- ![Us](https://raw.githubusercontent.com/gosquared/flags/1d382a9ea87667ac59c493b8fd771f49ce837e6a/flags/flags/shiny/24/United-States.png) **English**: [For English](https://github.com/teelge/Shadowsocks-Server-byT)
 
 
 
