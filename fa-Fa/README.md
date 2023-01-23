@@ -1,6 +1,6 @@
-<h1 align="center">Welcome to My Github 👋</h1>
+<h1 align="center">به گیتهاب من خوش آمدید 👋</h1>
 
-| I Made This Script So Everyone Could Create Proxy Server For People In need of Internet Without Limitation ✌🏻  Feel Free To Use This ONE line Code to deploy your very Own Server |
+|  ا ین کد رو برای ساخت سرور پروکسی درست کردم که در سرور لینوکس نسب کنید |
 |---|
 
   > ✨This is A simple But Very Effective Script To Install ShadowSocks Server On Your Linux Server
