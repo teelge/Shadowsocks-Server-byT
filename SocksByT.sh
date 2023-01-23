@@ -1,7 +1,9 @@
 #!/bin/bash
 
-clear
+Copy code
+#!/bin/bash
 
+clear
 
 while true; do
     echo "What do you want to do?"
@@ -14,40 +16,46 @@ while true; do
             break;;
         2)
             echo "You have selected option 2: Uninstall."
+            sudo systemctl stop shadowsocks-libev-server@config
+            sudo systemctl disable shadowsocks-libev-server@config
+            sudo ufw delete allow $port
+            sudo snap remove shadowsocks-libev
+            sudo rm -rf /var/snap/shadowsocks-libev
+            echo "Shadowsocks-libev Uninstalled"
             break;;
         *)
             echo "Invalid option. Please enter '1' for install or '2' for uninstall.";;
     esac
 done
 
+if [ "$option" = "1" ]; then
+    clear
+    while true; do
+        read -p "Enter Shadowsocks port [1-65535](default: 443):" port
+        if [ -z "$port" ]; then
+          port=443
+          break
+        else
+          case $port in
+            [1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-5][0-9][0-9][0-9]|6[0-4][0-9][0-9]|65[0-4][0-9]|655[0-3][0-5])
+              echo "Valid port"
+              break;;
+            *)
+              echo "Invalid port. Please enter a number between 1-65535.";;
+          esac
+        fi
+    done
 
-clear
+    clear
 
-while true; do
-    read -p "Enter Shadowsocks port [1-65535](default: 443):" port
-    if [ -z "$port" ]; then
-      port=443
-      break
-    else
-      case $port in
-        [1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-5][0-9][0-9][0-9]|6[0-4][0-9][0-9]|65[0-4][0-9]|655[0-3][0-5])
-          echo "Valid port"
-          break;;
-        *)
-          echo "Invalid port. Please enter a number between 1-65535.";;
-      esac
-    fi
-done
+    read -p "Enter password:" password
 
-clear
+    while [ -z "$password" ]
+    do
+      echo "A password is required. Please enter a password:"
+      read -p "Enter password: " password
+    done
 
-read -p "Enter password:" password
-
-while [ -z "$password" ]
-do
-  echo "A password is required. Please enter a password:"
-  read -p "Enter password: " password
-done
 
 
 sudo apt install -y snapd
