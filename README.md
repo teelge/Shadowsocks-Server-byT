@@ -1,6 +1,6 @@
 <h1 align="center">Welcome to My Github 👋</h1>
 
-        - [🇮🇷 فارسی /farsi](./fa-Fa/README.md)
+- [🇮🇷 فارسی /farsi](./fa-Fa/README.md)
 
 
 | I Made This Script So Everyone Could Create Proxy Server For People In need of Internet Without Limitation ✌🏻  Feel Free To Use This ONE line Code to deploy your very Own Server |
