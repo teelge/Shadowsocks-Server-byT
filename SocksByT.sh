@@ -48,7 +48,6 @@ echo -e "\033[1m\033[33mPort: $port\033[0m"
 echo -e "\033[1m\033[33mPassword: $password\033[0m"
 
 
-echo -e "\033[41m $port \033[0m"
-
+echo -e "\033[41m\033[1;37m $port \033[0m"
 
 
