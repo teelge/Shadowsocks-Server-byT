@@ -38,7 +38,9 @@ if snap list | grep -q shadowsocks-libev; then
     elif [ "$choice" = "3" ]; then
  
 clear
-
+        echo "Please Wait "
+sleep 1
+clear
         echo " "
         echo "    Server External IP: $(curl -s http://checkip.dyndns.org | grep -Eo '[0-9\.]+'). "
         echo "    Server Port: $(jq '.server_port' /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev/config.json). "
