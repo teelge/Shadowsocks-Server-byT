@@ -18,7 +18,7 @@ while true; do
             echo "You have selected option 2: Uninstall."
             sudo systemctl stop shadowsocks-libev-server@config
             sudo systemctl disable shadowsocks-libev-server@config
-            sudo ufw delete allow $port
+            sudo ufw deny $port
             sudo snap remove shadowsocks-libev
             sudo rm -rf /var/snap/shadowsocks-libev
             echo "Shadowsocks-libev Uninstalled"
