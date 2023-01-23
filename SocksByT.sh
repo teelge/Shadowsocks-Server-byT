@@ -2,6 +2,27 @@
 
 clear
 
+
+while true; do
+    echo "What do you want to do?"
+    echo "1) Install"
+    echo "2) Uninstall"
+    read -p "Enter your option: " option
+    case $option in
+        1)
+            echo "You have selected option 1: Install."
+            break;;
+        2)
+            echo "You have selected option 2: Uninstall."
+            break;;
+        *)
+            echo "Invalid option. Please enter '1' for install or '2' for uninstall.";;
+    esac
+done
+
+
+clear
+
 while true; do
     read -p "Enter Shadowsocks port [1-65535](default: 443):" port
     if [ -z "$port" ]; then
