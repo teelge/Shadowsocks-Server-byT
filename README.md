@@ -32,7 +32,7 @@ sudo systemctl status shadowsocks-libev-server@config
 sudo nano /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev/config.json
 ```
 ---
-## Uninstall !!  (Run The Command Again)
+## 🗑️ Uninstall !!  (Run The Command Again)
 ```
 wget -N --no-check-certificate https://raw.githubusercontent.com/teelge/Shadowsocks-Server-byT/main/SocksByT.sh && chmod +x SocksByT.sh && bash SocksByT.sh
 ```
