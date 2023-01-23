@@ -47,6 +47,6 @@ echo -e "\033[1m\033[33mServer's External IP: $external_ip\033[0m"
 echo -e "\033[1m\033[33mPort: $port\033[0m"
 echo -e "\033[1m\033[33mPassword: $password\033[0m"
 
-echo -e "\e[31;43m $port \e[0m"
+echo -e "\e[31;47m\e[1;37m $port \e[0m"
 
 
