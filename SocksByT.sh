@@ -1,8 +1,7 @@
 #!/bin/bash
 
 clear
-echo "Enter Shadowsocks port [1-65535](default: 443):"
-read -p "Enter port number [0-10]:" port
+read -p "Enter Shadowsocks port [1-65535](default: 443):" port
 read -p "Enter password:" password
 
 if [ -z "$port" ]; then
