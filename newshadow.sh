@@ -20,11 +20,11 @@ if snap list | grep -q shadowsocks-libev; then
         echo " "
         echo "        Uninstalling .. "
         echo " "
-        sudo snap remove shadowsocks-libev
         sudo systemctl stop shadowsocks-libev-server@config.service
         sudo systemctl disable shadowsocks-libev-server@config.service
+        sudo snap remove shadowsocks-libev
         sudo rm /etc/systemd/system/shadowsocks-libev-server@config.service
-        sudo rm /usr/local/bin/v2ray-plugin
+        sudo rm -rf /var/snap/shadowsocks-libev/common/bin/
         clear        
         echo " "
         echo "    Shadowsocks has been uninstalled. "
@@ -35,18 +35,15 @@ if snap list | grep -q shadowsocks-libev; then
         exit 0
     elif [ "$choice" = "3" ]; then
         clear
-        # Extract data for re-displaying the link
         CONF="/var/snap/shadowsocks-libev/common/etc/shadowsocks-libev/config.json"
+        if [ ! -f "$CONF" ]; then echo "Config file not found."; exit 1; fi
         IP=$(curl -s http://checkip.dyndns.org | grep -Eo '[0-9\.]+')
         PORT=$(jq -r '.server_port' $CONF)
         PASS=$(jq -r '.password' $CONF)
         METHOD=$(jq -r '.method' $CONF)
-        # Generate the Link again
         USER_INFO=$(echo -n "${METHOD}:${PASS}" | base64 | tr -d '\n' | tr '/+' '_-' | tr -d '=')
         PLUGIN_OPTS=$(echo -n "v2ray-plugin;tls;host=www.google.com" | python3 -c "import sys, urllib.parse; print(urllib.parse.quote(sys.stdin.read()))")
         SS_LINK="ss://${USER_INFO}@${IP}:${PORT}/?plugin=${PLUGIN_OPTS}"
-        
-        echo " "
         echo "    Server External IP: $IP"
         echo "    Server Port: $PORT"
         echo "    Password: $PASS"
@@ -63,49 +60,40 @@ clear
 
 # Port Selection
 while true; do
-    echo " "
-    echo "Choose a port number (443 is best for hiding traffic) "
-    echo " "
-    read -p " Enter Shadowsocks port [1-65535](default: 443):" port
-    if [ -z "$port" ]; then
-      port=443
-      break
+    echo "Choose a port (443 is recommended for obfuscation)"
+    read -p " Enter Shadowsocks port (default: 443): " port
+    port=${port:-443}
+    if [[ "$port" =~ ^[0-9]+$ ]] && [ "$port" -ge 1 ] && [ "$port" -le 65535 ]; then
+        break
     else
-      case $port in
-        [1-9]|[1-9][0-9]|[1-9][0-9][0-9]|[1-5][0-9][0-9][0-9]|6[0-4][0-9][0-9]|65[0-4][0-9]|655[0-3][0-5])
-          break;;
-        *)
-          echo "Invalid port.";;
-      esac
+        echo "Invalid port."
     fi
 done
 
-clear
-
 # Password Selection
-read -p "Enter password:" password
-while [ -z "$password" ]
-do
-  read -p "A password is required: " password
+read -p "Enter password: " password
+while [ -z "$password" ]; do
+    read -p "A password is required: " password
 done
 
 # Install Dependencies
 sudo apt-get update
 sudo apt-get install -y jq wget tar snapd python3
 
-# Install v2ray-plugin
-echo "Downloading v2ray-plugin..."
-wget -q https://github.com/shadowsocks/v2ray-plugin/releases/download/v1.3.2/v2ray-plugin-linux-amd64-v1.3.2.tar.gz
-tar -xf v2ray-plugin-linux-amd64-v1.3.2.tar.gz
-sudo mv v2ray-plugin-linux-amd64 /usr/local/bin/v2ray-plugin
-sudo chmod +x /usr/local/bin/v2ray-plugin
-rm v2ray-plugin-linux-amd64-v1.3.2.tar.gz
-
-# Install Shadowsocks
+# Install Shadowsocks via Snap
 sudo snap install shadowsocks-libev
+sudo mkdir -p /var/snap/shadowsocks-libev/common/bin
 sudo mkdir -p /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev
 
-# Generate Config
+# Install v2ray-plugin inside the Snap directory
+echo "Installing v2ray-plugin for Snap..."
+wget -q https://github.com/shadowsocks/v2ray-plugin/releases/download/v1.3.2/v2ray-plugin-linux-amd64-v1.3.2.tar.gz
+tar -xf v2ray-plugin-linux-amd64-v1.3.2.tar.gz
+sudo mv v2ray-plugin-linux-amd64 /var/snap/shadowsocks-libev/common/bin/v2ray-plugin
+sudo chmod +x /var/snap/shadowsocks-libev/common/bin/v2ray-plugin
+rm v2ray-plugin-linux-amd64-v1.3.2.tar.gz
+
+# Generate Config with the CORRECT plugin path for Snap
 echo "{
     \"server\":[\"::0\", \"0.0.0.0\"],
     \"mode\":\"tcp_and_udp\",
@@ -114,16 +102,19 @@ echo "{
     \"timeout\":60,
     \"method\":\"chacha20-ietf-poly1305\",
     \"nameserver\":\"1.1.1.1\",
-    \"plugin\":\"v2ray-plugin\",
+    \"plugin\":\"/var/snap/shadowsocks-libev/common/bin/v2ray-plugin\",
     \"plugin_opts\":\"server;tls;host=www.google.com\"
-}" | sudo tee /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev/config.json
+}" | sudo tee /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev/config.json > /dev/null
 
 # Create Systemd Service
-sudo echo -e "[Unit]\nDescription=Shadowsocks-Libev with Obfuscation\nAfter=network-online.target\n\n[Service]\nType=simple\nExecStart=/usr/bin/snap run shadowsocks-libev.ss-server -c /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev/config.json\n\n[Install]\nWantedBy=multi-user.target" | sudo tee /etc/systemd/system/shadowsocks-libev-server@config.service
+sudo echo -e "[Unit]\nDescription=Shadowsocks-Libev with v2ray-plugin\nAfter=network-online.target\n\n[Service]\nType=simple\nExecStart=/usr/bin/snap run shadowsocks-libev.ss-server -c /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev/config.json\nRestart=on-failure\nRestartSec=5\n\n[Install]\nWantedBy=multi-user.target" | sudo tee /etc/systemd/system/shadowsocks-libev-server@config.service > /dev/null
 
+# Firewall and System Tweaks
 sudo ufw allow $port
-sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1
-sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1
+sudo sysctl -w net.ipv6.conf.all.disable_ipv6=1 > /dev/null
+sudo sysctl -w net.ipv6.conf.default.disable_ipv6=1 > /dev/null
+
+# Start Service
 sudo systemctl daemon-reload
 sudo systemctl enable --now shadowsocks-libev-server@config
 
@@ -137,13 +128,11 @@ SS_LINK="ss://${USER_INFO}@${IP}:${port}/?plugin=${PLUGIN_OPTS}"
 clear
 echo -e "\033[1m\033[32m--- FREEDOM ACTIVATED BY T ---\033[0m"
 echo -e "\033[1m\033[33mIP: $IP  |  Port: $port\033[0m"
-echo -e "\033[1m\033[33mPassword: $password\033[0m"
 echo " "
-echo -e "\033[1m\033[36mCopy and Paste this link into your Shadowsocks Client:\033[0m"
+echo -e "\033[1m\033[36mCopy and Paste this link into your Client:\033[0m"
 echo -e "\033[1;37m$SS_LINK\033[0m"
 echo " "
-echo -e "\033[0;31mNote: Ensure Port $port is open in your cloud firewall (AWS/GCP/Oracle).\033[0m"
-
+sleep 2
 read -p "Show server status (y/n)? " choice
 if [ "$choice" = "y" ]; then
   sudo systemctl status shadowsocks-libev-server@config
