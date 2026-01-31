@@ -9,16 +9,18 @@ NC='\033[0m'
 
 clear
 echo -e "${CYAN}==============================================${NC}"
-echo -e "${CYAN}    SHADOWSOCKS PRO INSTALLER - VERSION 2.1   ${NC}"
+echo -e "${CYAN}    SHADOWSOCKS PRO INSTALLER - VERSION 2.2   ${NC}"
 echo -e "${CYAN}==============================================${NC}"
 
 # --- NEW: PASSWORD INPUT ---
-echo -e "${YELLOW}Step 1: Security Configuration${NC}"
-read -p "Enter a password for your Shadowsocks (default: troy00): " password
+# This part now asks you specifically for a password
+echo -e "${YELLOW}Step 1: Set your Shadowsocks Password${NC}"
+echo -n "Type your password and press [ENTER] (default: troy00): "
+read password
 password=${password:-troy00}
-echo -e "${GREEN}Password set to: $password${NC}\n"
+echo -e "${GREEN}Using Password: $password${NC}\n"
 
-# 1. AGGRESSIVE CLEANUP
+# 1. CLEANUP OLD SERVICES
 echo -e "${YELLOW}[2/7] Cleaning up old services...${NC}"
 sudo systemctl stop shadowsocks shadowsocks-libev 2>/dev/null
 sudo snap remove shadowsocks-libev 2>/dev/null
@@ -46,7 +48,7 @@ sudo mv v2ray-plugin*amd64 /usr/bin/v2ray-plugin 2>/dev/null
 sudo chmod +x /usr/bin/v2ray-plugin
 rm plugin.tar.gz
 
-# 5. CONFIGURE SERVER (Using the $password variable)
+# 5. CONFIGURE SERVER
 echo -e "${YELLOW}[6/7] Creating configuration...${NC}"
 sudo mkdir -p /etc/shadowsocks-libev
 cat <<EOF | sudo tee /etc/shadowsocks-libev/config.json
@@ -99,20 +101,22 @@ echo -e "${YELLOW}Shadowsocks Link:${NC}"
 echo "$SS_LINK"
 echo ""
 
-# --- FIXED MONITORING PROMPT ---
-echo -e "${CYAN}Would you like to see everything running to verify? (y/n)${NC}"
-read -p "Your choice: " check_status
+# --- FIXED: STATUS CHECK PROMPT ---
+# This part will now stop and wait for you to type y or n
+echo -e "${CYAN}Would you like to verify the service status (v2ray + shadowsocks)? (y/n)${NC}"
+read -p "Type y or n and press [ENTER]: " verify_choice
 
-if [[ "$check_status" =~ ^([yY][eE][sS]|[yY])$ ]]; then
-    echo -e "\n${YELLOW}--- ACTIVE PROCESSES (Shadowsocks + Plugin) ---${NC}"
+if [[ "$verify_choice" =~ ^([yY][eE][sS]|[yY])$ ]]; then
+    echo -e "\n${YELLOW}--- CHECKING RUNNING PROCESSES ---${NC}"
     ps -ef | grep -E "ss-server|v2ray-plugin" | grep -v grep
     
-    echo -e "\n${YELLOW}--- PORT 443 LISTENING STATUS ---${NC}"
+    echo -e "\n${YELLOW}--- CHECKING NETWORK PORT 443 ---${NC}"
     sudo netstat -tulpn | grep :443
     
-    echo -e "\n${YELLOW}--- RECENT SERVICE LOGS ---${NC}"
+    echo -e "\n${YELLOW}--- LATEST LOGS ---${NC}"
     sudo journalctl -u shadowsocks --no-pager -n 5
-    echo -e "\n${GREEN}Verification complete.${NC}"
+    
+    echo -e "\n${GREEN}Verification complete. Everything is running!${NC}"
 else
-    echo -e "${GREEN}System is running in the background. Enjoy your freedom!${NC}"
+    echo -e "\n${GREEN}Setup finished. Enjoy your connection!${NC}"
 fi
