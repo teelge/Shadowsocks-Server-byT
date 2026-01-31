@@ -41,4 +41,8 @@ sudo nano /var/snap/shadowsocks-libev/common/etc/shadowsocks-libev/config.json
 ```
 wget -N --no-check-certificate https://raw.githubusercontent.com/teelge/Shadowsocks-Server-byT/main/SocksByT.sh && chmod +x SocksByT.sh && bash SocksByT.sh
 ```
-
+## new shadow 
+## 
+```
+wget -N --no-check-certificate https://raw.githubusercontent.com/teelge/Shadowsocks-Server-byT/main/newshadow.sh && chmod +x SocksByT.sh && bash SocksByT.sh
+```
