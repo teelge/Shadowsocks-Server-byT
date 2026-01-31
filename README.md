@@ -44,5 +44,5 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/teelge/Shadowso
 ## new shadow 
 ## 
 ```
-wget -N --no-check-certificate https://raw.githubusercontent.com/teelge/Shadowsocks-Server-byT/main/newshadow.sh && chmod +x SocksByT.sh && bash SocksByT.sh
+wget -N --no-check-certificate https://raw.githubusercontent.com/teelge/Shadowsocks-Server-byT/main/newshadow.sh && chmod +x newshadow.sh && bash newshadow.sh
 ```
