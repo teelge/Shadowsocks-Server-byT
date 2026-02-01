@@ -1,44 +1,56 @@
 #!/bin/bash
 clear
 echo -e "\033[0;36m==============================================\033[0m"
-echo -e "\033[0;36m    SHADOWSOCKS - PURE MODE (NO PLUGIN)      \033[0m"
+echo -e "\033[0;36m    TROJAN-gRPC (ANONYMITY EDITION)          \033[0m"
 echo -e "\033[0;36m==============================================\033[0m"
 
-# 1. Clean everything
-sudo systemctl stop ss-troy 2>/dev/null
-sudo apt-get update && sudo apt-get install -y shadowsocks-libev qrencode
+# 1. Install Xray (The gold standard for anonymity)
+bash <(curl -L https://github.com/XTLS/Xray-install/raw/main/install-release.sh)
 
-# 2. Set Password
-printf "\033[0;33mSet Password: \033[0m"
+# 2. Generate Certificates
+mkdir -p /etc/xray
+openssl req -x509 -nodes -newkey rsa:2048 -keyout /etc/xray/self.key -out /etc/xray/self.crt -days 365 -subj "/C=US/ST=NY/L=NY/O=Google/OU=IT/CN=www.google.com"
+
+# 3. Set Password
+printf "\033[0;33mSet a Strong Password: \033[0m"
 read -r password < /dev/tty
 
-# 3. Simple Config (Optimized for Speed)
-cat <<EOF | sudo tee /etc/shadowsocks-libev/config.json
+# 4. Configure Xray for Trojan-gRPC
+cat <<EOF | sudo tee /usr/local/etc/xray/config.json
 {
-    "server":"0.0.0.0",
-    "server_port":8388,
-    "password":"$password",
-    "timeout":300,
-    "method":"chacha20-ietf-poly1305",
-    "fast_open":true,
-    "mode":"tcp_and_udp"
+    "log": {"loglevel": "warning"},
+    "inbounds": [{
+        "port": 443,
+        "protocol": "trojan",
+        "settings": {
+            "clients": [{"password": "$password"}],
+            "fallback": 80
+        },
+        "streamSettings": {
+            "network": "grpc",
+            "security": "tls",
+            "tlsSettings": {
+                "certificates": [{
+                    "certificateFile": "/etc/xray/self.crt",
+                    "keyFile": "/etc/xray/self.key"
+                }]
+            },
+            "grpcSettings": {"serviceName": "grpc-service"}
+        }
+    }],
+    "outbounds": [{"protocol": "freedom"}]
 }
 EOF
 
-# 4. Critical Kernel Routing Fix
-sudo sysctl -w net.ipv4.ip_forward=1
-sudo ufw allow 8388/tcp
-sudo ufw allow 8388/udp
-
-# 5. Restart
-sudo systemctl daemon-reload
-sudo systemctl restart shadowsocks-libev
+# 5. Restart & Firewall
+sudo systemctl restart xray
+sudo ufw allow 443/tcp
+sudo ufw allow 443/udp
 
 # 6. Generate Link
 IP=$(curl -s https://api.ipify.org)
-CONF=$(echo -n "chacha20-ietf-poly1305:$password" | base64 | tr -d '\n\r')
-LINK="ss://$CONF@$IP:8388#PureShadowsocks"
+LINK="trojan://$password@$IP:443?security=tls&encryption=none&type=grpc&serviceName=grpc-service&allowInsecure=1#TrueAnonymity"
 
-echo -e "\n\033[0;32m--- SETUP COMPLETE ---\033[0m"
+echo -e "\n\033[0;32m--- ANONYMITY SERVER READY ---\033[0m"
 echo -e "Link: $LINK\n"
 qrencode -t ansiutf8 "$LINK"
