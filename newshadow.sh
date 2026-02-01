@@ -9,29 +9,29 @@ NC='\033[0m'
 
 clear
 echo -e "${CYAN}==============================================${NC}"
-echo -e "${CYAN}    SHADOWSOCKS PRO INSTALLER - VERSION 2.6   ${NC}"
+echo -e "${CYAN}    SHADOWSOCKS PRO INSTALLER - VERSION 2.7   ${NC}"
 echo -e "${CYAN}==============================================${NC}"
 
 # --- 1. MANDATORY PASSWORD INPUT ---
 echo -e "${YELLOW}Step 1: Security Configuration${NC}"
 password=""
 while [ -z "$password" ]; do
-    printf "${CYAN}Enter a strong password for Shadowsocks: ${NC}"
+    printf "${CYAN}Enter a strong password (NO DEFAULTS): ${NC}"
     read -r password < /dev/tty
     if [ -z "$password" ]; then
-        echo -e "${RED}Error: Password cannot be empty. Please enter a password.${NC}"
+        echo -e "${RED}Error: Password cannot be empty.${NC}"
     fi
 done
-echo -e "${GREEN}Password set successfully.${NC}\n"
 
 # --- 2. CLEANUP & INSTALL ---
-echo -e "${YELLOW}[2/7] Cleaning up and installing tools...${NC}"
-sudo systemctl stop shadowsocks shadowsocks-libev 2>/dev/null
-sudo snap remove shadowsocks-libev 2>/dev/null
+echo -e "\n${YELLOW}[2/7] Preparing Environment...${NC}"
+sudo systemctl stop shadowsocks 2>/dev/null
+# We use 'fuser -k' here in the script instead of the service file to avoid systemd errors
+sudo fuser -k 443/tcp 2>/dev/null 
 sudo apt-get update && sudo apt-get install -y shadowsocks-libev jq wget tar qrencode psmisc net-tools
 
 # --- 3. SPEED OPTIMIZATION (BBR) ---
-echo -e "${YELLOW}[3/7] Enabling BBR Speed Booster...${NC}"
+echo -e "${YELLOW}[3/7] Enabling BBR...${NC}"
 if ! grep -q "net.core.default_qdisc=fq" /etc/sysctl.conf; then
     echo "net.core.default_qdisc=fq" | sudo tee -a /etc/sysctl.conf
     echo "net.ipv4.tcp_congestion_control=bbr" | sudo tee -a /etc/sysctl.conf
@@ -61,7 +61,7 @@ cat <<EOF | sudo tee /etc/shadowsocks-libev/config.json
 }
 EOF
 
-# --- 6. SYSTEMD SERVICE ---
+# --- 6. SYSTEMD SERVICE (Fixed ExecStartPre) ---
 echo -e "${YELLOW}[6/7] Setting up background service...${NC}"
 cat <<EOF | sudo tee /etc/systemd/system/shadowsocks.service
 [Unit]
@@ -71,7 +71,7 @@ After=network.target
 [Service]
 Type=simple
 User=root
-ExecStartPre=/usr/bin/fuser -k 443/tcp 2>/dev/null
+# We removed the redirect here to stop the 'filename does not exist' error
 ExecStart=/usr/bin/ss-server -c /etc/shadowsocks-libev/config.json
 Restart=always
 RestartSec=5
@@ -81,6 +81,7 @@ WantedBy=multi-user.target
 EOF
 
 # --- 7. LAUNCH ---
+echo -e "${YELLOW}[7/7] Launching...${NC}"
 sudo systemctl daemon-reload
 sudo systemctl enable shadowsocks
 sudo systemctl restart shadowsocks
@@ -96,16 +97,16 @@ echo -e "${CYAN}Shadowsocks Link (HTTP Mode):${NC}"
 echo -e "$SS_LINK\n"
 qrencode -t ansiutf8 "$SS_LINK"
 
-# --- 8. STATUS CHECK PROMPT ---
+# --- 8. STATUS CHECK ---
 echo ""
-echo -e "${CYAN}Would you like to verify the service status? (y/n)${NC}"
+echo -e "${CYAN}Verify service status? (y/n)${NC}"
 read -r verify_choice < /dev/tty
 
 if [[ "$verify_choice" =~ ^([yY])$ ]]; then
-    echo -e "\n${YELLOW}--- [PROCESS TREE] ---${NC}"
+    echo -e "\n${YELLOW}--- [PROCESSES] ---${NC}"
     ps -ef | grep -E "ss-server|v2ray-plugin" | grep -v grep
-    echo -e "\n${YELLOW}--- [PORT 443 STATUS] ---${NC}"
+    echo -e "\n${YELLOW}--- [PORT 443] ---${NC}"
     sudo netstat -tulpn | grep :443
     echo -e "\n${YELLOW}--- [LOGS] ---${NC}"
-    sudo journalctl -u shadowsocks --no-pager -n 5
+    sudo journalctl -u shadowsocks --no-pager -n 10
 fi
