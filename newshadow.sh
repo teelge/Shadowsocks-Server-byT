@@ -15,8 +15,10 @@ echo -e "${CYAN}==============================================${NC}"
 # --- 1. DETECTION & UNINSTALL OPTION ---
 if [ -f /etc/systemd/system/ss-troy.service ] || [ -f /etc/systemd/system/shadowsocks.service ]; then
     echo -e "${YELLOW}[!] PREVIOUS INSTALLATION DETECTED${NC}"
-    printf "${CYAN}Would you like to UNINSTALL everything and wipe the system clean? (y/n): ${NC}"
+    # Default is [Y/n] - hitting enter picks Y
+    printf "${CYAN}Would you like to UNINSTALL and wipe clean? [Y/n]: ${NC}"
     read -r purge_choice < /dev/tty
+    purge_choice=${purge_choice:-y}
     
     if [[ "$purge_choice" =~ ^([yY])$ ]]; then
         echo -e "${RED}\n[!] Wiping system... Cleaning ports, services, and configs.${NC}"
@@ -30,16 +32,17 @@ if [ -f /etc/systemd/system/ss-troy.service ] || [ -f /etc/systemd/system/shadow
         sudo systemctl daemon-reload
         echo -e "${GREEN}[+] System is now clean.${NC}"
         
-        printf "${CYAN}Do you want to exit now or continue with a FRESH INSTALL? (exit/fresh): ${NC}"
+        printf "${CYAN}Continue with a FRESH INSTALL? [Y/n]: ${NC}"
         read -r next_step < /dev/tty
-        if [[ "$next_step" == "exit" ]]; then
+        next_step=${next_step:-y}
+        if [[ ! "$next_step" =~ ^([yY])$ ]]; then
             echo -e "${GREEN}Goodbye!${NC}"
             exit 0
         fi
     fi
 fi
 
-# --- 2. FRESH INSTALLATION STARTS HERE ---
+# --- 2. FRESH INSTALLATION ---
 echo -e "\n${YELLOW}Step 1: Security Configuration${NC}"
 password=""
 while [ -z "$password" ]; do
@@ -116,8 +119,9 @@ qrencode -t ansiutf8 "$SS_LINK"
 
 # --- 8. STATUS CHECK ---
 echo ""
-echo -e "${CYAN}Would you like to verify the service status? (y/n)${NC}"
+printf "${CYAN}Verify service status? [Y/n]: ${NC}"
 read -r verify_choice < /dev/tty
+verify_choice=${verify_choice:-y}
 
 if [[ "$verify_choice" =~ ^([yY])$ ]]; then
     echo -e "\n${YELLOW}--- [PROCESS TREE] ---${NC}"
