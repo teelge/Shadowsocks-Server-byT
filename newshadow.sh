@@ -24,11 +24,11 @@ while [ -z "$password" ]; do
 done
 
 # --- 2. AGGRESSIVE PURGE ---
-echo -e "\n${YELLOW}[2/7] Cleaning up all previous versions...${NC}"
+echo -e "\n${YELLOW}[2/7] Purging old 'shadowsocks' service...${NC}"
 sudo systemctl stop shadowsocks ss-troy 2>/dev/null
 sudo systemctl disable shadowsocks ss-troy 2>/dev/null
+# Delete the old broken file entirely
 sudo rm -f /etc/systemd/system/shadowsocks.service
-sudo rm -f /etc/systemd/system/ss-troy.service
 sudo fuser -k 443/tcp 2>/dev/null 
 
 # --- 3. INSTALL & SPEED BOOST ---
@@ -61,8 +61,8 @@ cat <<EOF | sudo tee /etc/shadowsocks-libev/config.json
 EOF
 
 # --- 6. NEW SERVICE (RENAMED TO SS-TROY) ---
-# This bypasses all previous systemd errors by being a "new" service
-echo -e "${YELLOW}[6/7] Registering new service (ss-troy)...${NC}"
+# Renaming forces systemd to ignore all previous cached errors
+echo -e "${YELLOW}[6/7] Creating new service: ss-troy...${NC}"
 cat <<EOF | sudo tee /etc/systemd/system/ss-troy.service
 [Unit]
 Description=Shadowsocks Troy Service
@@ -108,5 +108,5 @@ if [[ "$verify_choice" =~ ^([yY])$ ]]; then
     echo -e "\n${YELLOW}--- [LOGS] ---${NC}"
     sudo journalctl -u ss-troy --no-pager -n 5
 else
-    echo -e "\n${GREEN}Setup complete!${NC}"
+    echo -e "\n${GREEN}Setup complete! Your server is running as 'ss-troy'.${NC}"
 fi
