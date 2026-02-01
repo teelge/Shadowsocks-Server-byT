@@ -9,7 +9,7 @@ NC='\033[0m'
 
 clear
 echo -e "${CYAN}==============================================${NC}"
-echo -e "${CYAN}    SHADOWSOCKS PRO INSTALLER - VERSION 2.9   ${NC}"
+echo -e "${CYAN}    SHADOWSOCKS PRO INSTALLER - VERSION 3.0   ${NC}"
 echo -e "${CYAN}==============================================${NC}"
 
 # --- 1. MANDATORY PASSWORD INPUT ---
@@ -23,16 +23,15 @@ while [ -z "$password" ]; do
     fi
 done
 
-# --- 2. THE PURGE (IMPORTANT) ---
-echo -e "\n${YELLOW}[2/7] Purging old corrupted service files...${NC}"
-sudo systemctl stop shadowsocks 2>/dev/null
-sudo systemctl disable shadowsocks 2>/dev/null
-# This deletes the file that is causing the 2>/dev/null error
+# --- 2. AGGRESSIVE PURGE ---
+echo -e "\n${YELLOW}[2/7] Cleaning up all previous versions...${NC}"
+sudo systemctl stop shadowsocks ss-troy 2>/dev/null
+sudo systemctl disable shadowsocks ss-troy 2>/dev/null
 sudo rm -f /etc/systemd/system/shadowsocks.service
+sudo rm -f /etc/systemd/system/ss-troy.service
 sudo fuser -k 443/tcp 2>/dev/null 
 
-# --- 3. INSTALL & BBR ---
-echo -e "${YELLOW}[3/7] Installing dependencies...${NC}"
+# --- 3. INSTALL & SPEED BOOST ---
 sudo apt-get update && sudo apt-get install -y shadowsocks-libev jq wget tar qrencode psmisc net-tools
 if ! grep -q "net.core.default_qdisc=fq" /etc/sysctl.conf; then
     echo "net.core.default_qdisc=fq" | sudo tee -a /etc/sysctl.conf
@@ -41,7 +40,6 @@ if ! grep -q "net.core.default_qdisc=fq" /etc/sysctl.conf; then
 fi
 
 # --- 4. PLUGIN INSTALL ---
-echo -e "${YELLOW}[4/7] Downloading v2ray-plugin...${NC}"
 wget -q -O plugin.tar.gz https://github.com/shadowsocks/v2ray-plugin/releases/download/v1.3.2/v2ray-plugin-linux-amd64-v1.3.2.tar.gz
 tar -xf plugin.tar.gz
 sudo mv v2ray-plugin*amd64 /usr/bin/v2ray-plugin 2>/dev/null
@@ -62,11 +60,12 @@ cat <<EOF | sudo tee /etc/shadowsocks-libev/config.json
 }
 EOF
 
-# --- 6. CLEAN SERVICE CREATION ---
-echo -e "${YELLOW}[6/7] Creating clean systemd service...${NC}"
-cat <<EOF | sudo tee /etc/systemd/system/shadowsocks.service
+# --- 6. NEW SERVICE (RENAMED TO SS-TROY) ---
+# This bypasses all previous systemd errors by being a "new" service
+echo -e "${YELLOW}[6/7] Registering new service (ss-troy)...${NC}"
+cat <<EOF | sudo tee /etc/systemd/system/ss-troy.service
 [Unit]
-Description=Shadowsocks-T Service
+Description=Shadowsocks Troy Service
 After=network.target
 
 [Service]
@@ -81,10 +80,9 @@ WantedBy=multi-user.target
 EOF
 
 # --- 7. LAUNCH ---
-echo -e "${YELLOW}[7/7] Starting service...${NC}"
 sudo systemctl daemon-reload
-sudo systemctl enable shadowsocks
-sudo systemctl restart shadowsocks
+sudo systemctl enable ss-troy
+sudo systemctl restart ss-troy
 
 # --- GENERATE LINK ---
 IP=$(curl -s https://api.ipify.org)
@@ -99,7 +97,7 @@ qrencode -t ansiutf8 "$SS_LINK"
 
 # --- 8. STATUS CHECK ---
 echo ""
-echo -e "${CYAN}Verify service status? (y/n)${NC}"
+echo -e "${CYAN}Would you like to verify the service status? (y/n)${NC}"
 read -r verify_choice < /dev/tty
 
 if [[ "$verify_choice" =~ ^([yY])$ ]]; then
@@ -108,7 +106,7 @@ if [[ "$verify_choice" =~ ^([yY])$ ]]; then
     echo -e "\n${YELLOW}--- [PORT 443 STATUS] ---${NC}"
     sudo netstat -tulpn | grep :443
     echo -e "\n${YELLOW}--- [LOGS] ---${NC}"
-    sudo journalctl -u shadowsocks --no-pager -n 5
+    sudo journalctl -u ss-troy --no-pager -n 5
 else
     echo -e "\n${GREEN}Setup complete!${NC}"
 fi
