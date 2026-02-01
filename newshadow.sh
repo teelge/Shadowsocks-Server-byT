@@ -18,7 +18,7 @@ if [ -f /etc/systemd/system/ss-troy.service ] || [ -f /etc/systemd/system/shadow
     printf "${CYAN}Would you like to UNINSTALL and wipe clean? [Y/n]: ${NC}"
     read -r purge_choice < /dev/tty
     
-    # Set default to 'y' if empty
+    # Apply default 'y'
     purge_choice=${purge_choice:-y}
     
     if [[ "$purge_choice" =~ ^([yY])$ ]]; then
@@ -49,15 +49,12 @@ password=""
 while [ -z "$password" ]; do
     printf "${CYAN}Enter a strong password for this install: ${NC}"
     read -r password < /dev/tty
-    # Note: We don't default the password for security reasons, 
-    # but we force the user to provide one.
 done
 
 echo -e "\n${YELLOW}[2/7] Installing dependencies...${NC}"
 sudo apt-get update && sudo apt-get install -y shadowsocks-libev jq wget tar qrencode psmisc net-tools
 
 # --- 3. SPEED OPTIMIZATION (BBR) ---
-
 echo -e "${YELLOW}[3/7] Enabling BBR Speed Booster...${NC}"
 if ! grep -q "net.core.default_qdisc=fq" /etc/sysctl.conf; then
     echo "net.core.default_qdisc=fq" | sudo tee -a /etc/sysctl.conf
